@@ -1,0 +1,98 @@
+/*
+CREATE TABLE ADDRESS
+  (
+    addressKey INTEGER NOT NULL ,
+    address1   VARCHAR (40) NOT NULL ,
+    address2   VARCHAR (40) NOT NULL,
+    county     VARCHAR (20) NOT NULL,
+    zipcode    VARCHAR (20) NOT NULL
+  ) ;
+ALTER TABLE ADDRESS ADD CONSTRAINT ADDRESS_PK PRIMARY KEY ( addressKey ) ;
+*/
+
+CREATE TABLE HOLIDAY
+  (
+    requestID 		    INT AUTO_INCREMENT primary key NOT NULL ,
+    userID	            INTEGER NULL,
+    holidayType             VARCHAR (30) NOT NULL ,
+    name                    VARCHAR (20) NOT NULL,
+    holidayFrom             DATE NOT NULL,
+    holidayTo               DATE NOT NULL,
+    workReturn              DATE NOT NULL,
+    currentDate             DATE NOT NULL,
+    description             VARCHAR (400) NOT NULL,
+    requestStatus	    VARCHAR (20) NOT NULL,
+
+    
+    CONSTRAINT User_Holiday_FK FOREIGN KEY (userID)
+    REFERENCES USER(userID)
+  ) ;
+//ALTER TABLE HOLIDAY ADD CONSTRAINT HOLIDAY_PK PRIMARY KEY ( holidayType ) ;
+
+
+CREATE TABLE SCHEDULE
+  (
+    dayNum         INT AUTO_INCREMENT primary key NOT NULL ,
+    scheduleStatus VARCHAR (20) NOT NULL ,
+    takerName	   VARCHAR (30) NOT NULL ,
+    startTime       VARCHAR (10) NOT NULL,
+    endTime        VARCHAR (10) NOT NULL,
+    workDays       VARCHAR (20) NOT NULL,
+    workDate	   DATE NOT NULL,
+    totalHours     INTEGER NOT NULL,
+    USER_userID    INTEGER NULL
+  ) ;
+//ALTER TABLE SCHEDULE ADD CONSTRAINT SCHEDULE_PK PRIMARY KEY (dayNum ) ;
+
+
+CREATE TABLE USER
+  (
+    userID                INT AUTO_INCREMENT primary key NOT NULL ,
+    username              VARCHAR (50) NOT NULL ,
+    firstname             VARCHAR (50) NOT NULL ,
+    lastname		  VARCHAR (50) NOT NULL ,
+    email  		  VARCHAR (50) NOT NULL ,
+    password              VARCHAR (50) NOT NULL ,
+    againpassword         VARCHAR (50) NOT NULL ,
+    gender                VARCHAR (10) NOT NULL ,
+    phone                 VARCHAR (20) NOT NULL ,
+    address               VARCHAR (100) NOT NULL ,
+    county		  VARCHAR (30) NOT NULL ,
+    workArea              VARCHAR (30) NOT NULL ,
+    position              VARCHAR (30) NOT NULL ,
+    UNIQUE KEY `username` (`username`),
+    USER_TYPE_UserTypeKey INTEGER  
+  ) ;
+//ALTER TABLE USER ADD CONSTRAINT User_PK PRIMARY KEY ( userID ) ;
+
+
+CREATE TABLE USER_TYPE
+  (
+    UserTypeKey INT AUTO_INCREMENT primary key NOT NULL ,
+    typeName    VARCHAR (20) NOT NULL,
+    description VARCHAR (20) NOT NULL
+  ) ;
+//ALTER TABLE USER_TYPE ADD CONSTRAINT USER_TYPE_PK PRIMARY KEY ( UserTypeKey ) ;
+
+/*
+CREATE TABLE WORKDETAILS
+  (
+    workarea   VARCHAR (20) NOT NULL ,
+    position   VARCHAR (20) NOT NULL,
+    workStatus VARCHAR (20) NOT NULL
+  ) ;
+ALTER TABLE WORKDETAILS ADD CONSTRAINT WORKDETAILS_PK PRIMARY KEY ( workarea ) ;
+/*
+
+ALTER TABLE SCHEDULE ADD CONSTRAINT SCHEDULE_USER_FK FOREIGN KEY ( USER_userID ) REFERENCES USER ( userID ) ;
+
+//ALTER TABLE HOLIDAY ADD CONSTRAINT HOLIDAY_USER_FK FOREIGN KEY ( USER_userID ) REFERENCES USER ( userID ) ;
+
+//ALTER TABLE USER ADD CONSTRAINT USER_ADDRESS_FK FOREIGN KEY ( ADDRESS_addressKey ) REFERENCES ADDRESS ( addressKey ) ;
+
+ALTER TABLE USER ADD CONSTRAINT USER_USER_TYPE_FK FOREIGN KEY ( USER_TYPE_UserTypeKey ) REFERENCES USER_TYPE ( UserTypeKey ) ;
+
+//ALTER TABLE USER ADD CONSTRAINT USER_WORKDETAILS_FK FOREIGN KEY ( WORKDETAILS_workarea ) REFERENCES WORKDETAILS ( workarea ) ;
+
+ALTER TABLE HOLIDAY ADD CONSTRAINT HOLIDAY_SCHEDULE_FK FOREIGN KEY (SCHEDULE_dayNum ) REFERENCES SCHEDULE (dayNum ) ;
+
